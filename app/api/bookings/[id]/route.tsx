@@ -47,3 +47,20 @@ export async function PUT(
   });
   return NextResponse.json(updatedBooking);
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = await params;
+  const booking = await prisma.booking.findUnique({
+    where: { id: parseInt(id) },
+  });
+  if (!booking) {
+    return NextResponse.json({ error: "booking not found" }, { status: 404 });
+  }
+  await prisma.booking.delete({
+    where: { id: booking.id },
+  });
+  return NextResponse.json({});
+}
