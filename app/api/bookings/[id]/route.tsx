@@ -38,13 +38,15 @@ export async function PUT(
   const updatedBooking = await prisma.booking.update({
     where: { id: booking.id },
     data: {
+      name: body.name,
+      capacity: body.capacity,
       date: body.date,
       startTime: body.startTime,
       endTime: body.endTime,
       bookedBy: body.bookedBy,
-      roomId: body.roomId,
     },
   });
+
   return NextResponse.json(updatedBooking);
 }
 
@@ -56,11 +58,14 @@ export async function DELETE(
   const booking = await prisma.booking.findUnique({
     where: { id: parseInt(id) },
   });
+
   if (!booking) {
-    return NextResponse.json({ error: "booking not found" }, { status: 404 });
+    return NextResponse.json({ error: "Booking not found" }, { status: 404 });
   }
+
   await prisma.booking.delete({
     where: { id: booking.id },
   });
+
   return NextResponse.json({});
 }

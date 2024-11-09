@@ -13,19 +13,12 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-model Room {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  capacity Int
-  bookings Booking[]
-}
-
 model Booking {
-  id        Int      @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  capacity  Int
   date      String
   startTime String
   endTime   String
-  bookedBy  String
-  roomId    Int
-  room      Room     @relation(fields: [roomId], references: [id])
+  bookedBy  String? 
 }

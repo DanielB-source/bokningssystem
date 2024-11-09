@@ -13,24 +13,14 @@ export async function POST(request: NextRequest) {
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
 
-  const conflictingBooking = await prisma.booking.findFirst({
-    where: {
-      date: body.date,
-      startTime: body.startTime,
-      endTime: body.endTime,
-      roomId: body.roomId,
-    },
-  });
-  if (conflictingBooking)
-    return NextResponse.json({ error: "Room already booked" }, { status: 400 });
-
   const newBooking = await prisma.booking.create({
     data: {
+      name: body.name,
+      capacity: body.capacity,
       date: body.date,
       startTime: body.startTime,
       endTime: body.endTime,
       bookedBy: body.bookedBy,
-      roomId: body.roomId,
     },
   });
   return NextResponse.json(newBooking, { status: 201 });
