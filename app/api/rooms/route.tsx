@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 import schema from "./schema";
-import { error } from "console";
 
 export async function GET(request: NextRequest) {
   const rooms = await prisma.room.findMany();
