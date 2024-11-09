@@ -44,3 +44,20 @@ export async function PUT(
   });
   return NextResponse.json(updatedRoom);
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = await params;
+  const room = await prisma.room.findUnique({
+    where: { id: parseInt(id) },
+  });
+  if (!room) {
+    return NextResponse.json({ error: "Room not found" }, { status: 404 });
+  }
+  await prisma.room.delete({
+    where: { id: room.id },
+  });
+  return NextResponse.json({});
+}
