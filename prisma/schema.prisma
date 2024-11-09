@@ -22,9 +22,9 @@ model Room {
 
 model Booking {
   id        Int      @id @default(autoincrement())
-  date      DateTime
-  startTime DateTime
-  endTime   DateTime
+  date      String
+  startTime String
+  endTime   String
   bookedBy  String
   roomId    Int
   room      Room     @relation(fields: [roomId], references: [id])
