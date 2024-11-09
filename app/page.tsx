@@ -1,8 +1,12 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="flex h-screen flex-col justify-between items-center ">
       <h1 className="text-9xl">Boka ett rum</h1>
-      <button className="btn w-96 h-20 btn-neutral mb-10">Boka</button>
+      <Link href="/rooms" className="btn w-96 h-20 btn-neutral mb-10">
+        Boka
+      </Link>
     </div>
   );
 }
