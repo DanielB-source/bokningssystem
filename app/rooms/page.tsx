@@ -10,6 +10,7 @@ interface Booking {
   endTime: string;
   bookedBy: string | null;
 }
+
 const Rooms = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentDateIndex, setCurrentDateIndex] = useState(0);
@@ -18,7 +19,6 @@ const Rooms = () => {
   const [appliedFilter, setAppliedFilter] = useState<string[]>([]);
   const [dropdownLabel, setDropdownLabel] = useState("Mötesrum");
   const [selectedBooking, setSelectedBooking] = useState<number | null>(null);
-
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -55,6 +55,11 @@ const Rooms = () => {
     }
   };
 
+  const filteredBookings = bookings.filter(
+    (booking) =>
+      appliedFilter.length === 0 || appliedFilter.includes(booking.name)
+  );
+
   const handleSelect = () => {
     setAppliedFilter(selectedRooms);
     setDropdownOpen(false);
@@ -89,11 +94,6 @@ const Rooms = () => {
       setSelectedBooking(bookingId);
     }
   };
-
-  const filteredBookings = bookings.filter(
-    (booking) =>
-      appliedFilter.length === 0 || appliedFilter.includes(booking.name)
-  );
 
   return (
     <div className="p-10">
@@ -202,7 +202,11 @@ const Rooms = () => {
                         }`}
                         onClick={() => handleBookingSelection(booking.id)}
                       >
-                        <p>
+                        <p
+                          className={
+                            selectedBooking === booking.id ? "font-bold" : ""
+                          }
+                        >
                           {booking.name} ({booking.capacity} pers)
                         </p>
                         <p>
@@ -216,6 +220,14 @@ const Rooms = () => {
           </tbody>
         </table>
       </div>
+
+      {selectedBooking !== null && (
+        <div className="fixed bottom-16 left-0 right-0 flex justify-center">
+          <button className="btn bg-black text-white font-bold w-11/12 max-w-2xl h-16 rounded-full shadow-lg transition-transform transform translate-y-4">
+            Nästa
+          </button>
+        </div>
+      )}
     </div>
   );
 };
