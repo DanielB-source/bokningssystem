@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface Booking {
@@ -223,9 +224,17 @@ const Rooms = () => {
 
       {selectedBooking !== null && (
         <div className="fixed bottom-16 left-0 right-0 flex justify-center">
-          <button className="btn bg-black text-white font-bold w-11/12 max-w-2xl h-16 rounded-full shadow-lg transition-transform transform translate-y-4">
+          <Link
+            href={{
+              pathname: "/confirmbooking",
+              query: {
+                id: selectedBooking,
+              },
+            }}
+            className="btn bg-black text-white font-bold w-11/12 max-w-2xl h-16 rounded-full shadow-lg transition-transform transform translate-y-4"
+          >
             Nästa
-          </button>
+          </Link>
         </div>
       )}
     </div>
