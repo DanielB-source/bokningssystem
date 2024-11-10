@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const BookingPage = () => {
   const [name, setName] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("id");
@@ -25,11 +26,16 @@ const BookingPage = () => {
         }),
       });
 
-      router.push("/rooms");
-      router.refresh();
+      setShowModal(true);
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    router.push("/rooms");
+    router.refresh();
   };
 
   return (
@@ -51,6 +57,20 @@ const BookingPage = () => {
       >
         Boka
       </button>
+
+      {showModal && (
+        <div className="modal modal-open flex items-center justify-center">
+          <div className="modal-box text-center">
+            <h2 className="text-xl font-bold mb-4">Ditt rum är bokat!</h2>
+            <p className="text-4xl mb-6">😊</p>
+            <div className="modal-action ">
+              <button onClick={closeModal} className="btn bg-black text-white">
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
