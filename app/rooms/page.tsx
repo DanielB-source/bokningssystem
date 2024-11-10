@@ -10,7 +10,6 @@ interface Booking {
   endTime: string;
   bookedBy: string | null;
 }
-
 const Rooms = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentDateIndex, setCurrentDateIndex] = useState(0);
@@ -18,6 +17,7 @@ const Rooms = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [appliedFilter, setAppliedFilter] = useState<string[]>([]);
   const [dropdownLabel, setDropdownLabel] = useState("Mötesrum");
+  const [selectedBooking, setSelectedBooking] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -82,6 +82,14 @@ const Rooms = () => {
       setCurrentDateIndex(currentDateIndex + 3);
   };
 
+  const handleBookingSelection = (bookingId: number) => {
+    if (selectedBooking === bookingId) {
+      setSelectedBooking(null);
+    } else {
+      setSelectedBooking(bookingId);
+    }
+  };
+
   const filteredBookings = bookings.filter(
     (booking) =>
       appliedFilter.length === 0 || appliedFilter.includes(booking.name)
@@ -99,11 +107,7 @@ const Rooms = () => {
         >
           {dropdownLabel}
           <span className="ml-2">
-            {dropdownOpen ? (
-              <span className="text-lg">^</span>
-            ) : (
-              <span className="text-lg">v</span>
-            )}
+            {dropdownOpen ? <span>^</span> : <span>v</span>}
           </span>
         </label>
         {dropdownOpen && (
@@ -173,20 +177,44 @@ const Rooms = () => {
         </button>
       </div>
 
-      <div className="space-y-3">
-        {filteredBookings
-          .filter((booking) => visibleDates.includes(booking.date))
-          .map((booking) => (
-            <div key={booking.id} className="p-2 border rounded">
-              <p>
-                {booking.name} ({booking.capacity} personer)
-              </p>
-              <p>
-                {booking.date}: {booking.startTime} - {booking.endTime}
-              </p>
-              <button className="btn btn-active btn-primary">Boka</button>
-            </div>
-          ))}
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              {visibleDates.map((date) => (
+                <th key={date}>{date}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {visibleDates.map((date) => (
+                <td key={date}>
+                  {filteredBookings
+                    .filter((booking) => booking.date === date)
+                    .map((booking) => (
+                      <div
+                        key={booking.id}
+                        className={`p-2 border-2 rounded mb-2 cursor-pointer ${
+                          selectedBooking === booking.id
+                            ? "bg-green-500 text-white"
+                            : "border-green-500 bg-white"
+                        }`}
+                        onClick={() => handleBookingSelection(booking.id)}
+                      >
+                        <p>
+                          {booking.name} ({booking.capacity} pers)
+                        </p>
+                        <p>
+                          {booking.startTime} - {booking.endTime}
+                        </p>
+                      </div>
+                    ))}
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );
