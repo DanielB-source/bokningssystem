@@ -44,7 +44,7 @@ const BookingPage = () => {
         <h1 className="text-4xl font-medium">Vem bokar?</h1>
         <input
           type="text"
-          placeholder="Skriv för- och efternamn"
+          placeholder="Skriv ditt fullständiga namn här"
           className="w-80 px-4 py-3 border border-gray-300 rounded"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -53,7 +53,7 @@ const BookingPage = () => {
 
       <button
         onClick={handleSubmit}
-        className="btn bg-black text-white font-bold w-11/12 max-w-2xl h-16 rounded-full shadow-lg transition-transform transform translate-y-4"
+        className="btn bg-black text-white  w-11/12 max-w-2xl h-16 rounded-full "
       >
         Boka
       </button>
