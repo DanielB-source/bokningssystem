@@ -53,6 +53,7 @@ const Rooms = () => {
         <button
           className="btn btn-outline btn-circle"
           onClick={handlePrevDates}
+          disabled={currentDateIndex === 0}
         >
           &lt;
         </button>
