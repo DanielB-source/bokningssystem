@@ -33,6 +33,19 @@ const Rooms = () => {
     fetchBookings();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const dropdown = document.querySelector(".dropdown");
+      if (dropdown && !dropdown.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   const dates: string[] = [];
   bookings.forEach((b) => {
     if (!dates.includes(b.date)) {
