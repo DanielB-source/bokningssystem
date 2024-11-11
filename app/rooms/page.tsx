@@ -201,23 +201,34 @@ const Rooms = () => {
                     .map((booking) => (
                       <div
                         key={booking.id}
-                        className={`p-1 sm:p-2 border-2 rounded mb-2 cursor-pointer text-[10px] sm:text-sm md:text-base ${
-                          selectedBooking === booking.id
-                            ? "bg-green-500 text-white"
-                            : "border-green-500 bg-white hover:bg-green-50"
+                        className={`flex flex-col justify-between p-1 sm:p-2 border-2 rounded mb-2 text-[10px] sm:text-sm md:text-base h-[120px] sm:h-[140px] md:h-[160px] ${
+                          booking.bookedBy
+                            ? "border-red-500 bg-red-100 cursor-not-allowed"
+                            : `border-green-500 bg-white cursor-pointer ${
+                                selectedBooking === booking.id
+                                  ? "bg-green-600"
+                                  : ""
+                              }`
                         }`}
-                        onClick={() => handleBookingSelection(booking.id)}
+                        onClick={
+                          booking.bookedBy
+                            ? undefined
+                            : () => handleBookingSelection(booking.id)
+                        }
                       >
-                        <p
-                          className={`break-words ${
-                            selectedBooking === booking.id ? "font-bold" : ""
-                          }`}
-                        >
+                        <p className={"break-words"}>
                           {booking.name} ({booking.capacity} pers)
                         </p>
                         <p className="break-words">
                           {booking.startTime} - {booking.endTime}
                         </p>
+                        {booking.bookedBy ? (
+                          <p className="text-red-600 font-semibold">
+                            Bokad av: {booking.bookedBy}
+                          </p>
+                        ) : (
+                          <p className="text-green-600">Tillgänglig</p>
+                        )}
                       </div>
                     ))}
                 </td>
