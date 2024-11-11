@@ -204,11 +204,11 @@ const Rooms = () => {
                         className={`flex flex-col justify-between p-1 sm:p-2 border-2 rounded mb-2 text-[10px] sm:text-sm md:text-base h-[120px] sm:h-[140px] md:h-[160px] ${
                           booking.bookedBy
                             ? "border-red-500 bg-red-100 cursor-not-allowed"
-                            : `border-green-500 bg-white cursor-pointer ${
+                            : `border-green-500 ${
                                 selectedBooking === booking.id
                                   ? "bg-green-600"
-                                  : ""
-                              }`
+                                  : "bg-white"
+                              } cursor-pointer`
                         }`}
                         onClick={
                           booking.bookedBy
@@ -216,7 +216,7 @@ const Rooms = () => {
                             : () => handleBookingSelection(booking.id)
                         }
                       >
-                        <p className={"break-words"}>
+                        <p className="break-words">
                           {booking.name} ({booking.capacity} pers)
                         </p>
                         <p className="break-words">
@@ -228,8 +228,10 @@ const Rooms = () => {
                           </p>
                         ) : (
                           <p
-                            className={`text-green-600 ${
-                              selectedBooking === booking.id ? "text-black" : ""
+                            className={`${
+                              selectedBooking === booking.id
+                                ? "text-gray-900"
+                                : "text-green-600"
                             }`}
                           >
                             Tillgänglig
