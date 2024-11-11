@@ -178,39 +178,44 @@ const Rooms = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="table w-full">
+      <div className="w-full">
+        <table className="w-full table-fixed">
           <thead>
             <tr>
               {visibleDates.map((date) => (
-                <th key={date}>{date}</th>
+                <th
+                  key={date}
+                  className="w-1/3 p-1 sm:p-2 text-[10px] sm:text-sm md:text-base bg-base-200"
+                >
+                  {date}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
             <tr>
               {visibleDates.map((date) => (
-                <td key={date}>
+                <td key={date} className="w-1/3 p-1 sm:p-2 align-top">
                   {filteredBookings
                     .filter((booking) => booking.date === date)
                     .map((booking) => (
                       <div
                         key={booking.id}
-                        className={`p-2 border-2 rounded mb-2 cursor-pointer ${
+                        className={`p-1 sm:p-2 border-2 rounded mb-2 cursor-pointer text-[10px] sm:text-sm md:text-base ${
                           selectedBooking === booking.id
                             ? "bg-green-500 text-white"
-                            : "border-green-500 bg-white"
+                            : "border-green-500 bg-white hover:bg-green-50"
                         }`}
                         onClick={() => handleBookingSelection(booking.id)}
                       >
                         <p
-                          className={
+                          className={`break-words ${
                             selectedBooking === booking.id ? "font-bold" : ""
-                          }
+                          }`}
                         >
                           {booking.name} ({booking.capacity} pers)
                         </p>
-                        <p>
+                        <p className="break-words">
                           {booking.startTime} - {booking.endTime}
                         </p>
                       </div>
