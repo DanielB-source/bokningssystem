@@ -227,7 +227,13 @@ const Rooms = () => {
                             Bokad av: {booking.bookedBy}
                           </p>
                         ) : (
-                          <p className="text-green-600">Tillgänglig</p>
+                          <p
+                            className={`text-green-600 ${
+                              selectedBooking === booking.id ? "text-black" : ""
+                            }`}
+                          >
+                            Tillgänglig
+                          </p>
                         )}
                       </div>
                     ))}
